@@ -16,12 +16,12 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-cloudinary.config(
-    cloud_name ='dbos9xidr',
-    api_key=config('api_key'), 
-    api_secret=config('api_secret'),
-    secure = config('secure'),
-)
+# cloudinary.config(
+#     cloud_name ='badgerz',
+#     api_key=config('api_key'), 
+#     api_secret=config('api_secret'),
+#     secure = config('secure'),
+# )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,10 +31,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'config(SECRET_KEY)'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+DEBUG = True
+ALLOWED_HOSTS = '*'
 
 # Application definition
 
@@ -64,10 +64,10 @@ MIDDLEWARE = [
 
 # Email configurations remember to install python-decouple
 EMAIL_USE_TLS=True
-EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST=''
+EMAIL_PORT=
+EMAIL_HOST_USER =''
+EMAIL_HOST_PASSWORD = ''
 
 ROOT_URLCONF = 'portfolio.urls'
 
@@ -96,11 +96,10 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': '',
+        'NAME':'project',
+        'USER':'obonyo',
+        'PASSWORD':'akoth1998',
+        'HOST': 'localhost',
     }
 }
 
