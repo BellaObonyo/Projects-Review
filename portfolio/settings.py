@@ -65,7 +65,7 @@ MIDDLEWARE = [
 # Email configurations remember to install python-decouple
 EMAIL_USE_TLS=True
 EMAIL_HOST=''
-EMAIL_PORT=
+EMAIL_PORT=''
 EMAIL_HOST_USER =''
 EMAIL_HOST_PASSWORD = ''
 
@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'project',
+        'NAME':'projects',
         'USER':'obonyo',
         'PASSWORD':'akoth1998',
         'HOST': 'localhost',
