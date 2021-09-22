@@ -24,6 +24,7 @@
   <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
     rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
   <!-- Vendor CSS Files -->
   <link href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -51,12 +52,12 @@
         <div class="d-flex flex-column">
 
           <div class="profile">
-            <img src="{% static './Bella.jpg' %}" alt="" class="img-fluid rounded-circle">
+            <img src="{% static 'images/Bella.jpg' %}" alt="" class="img-fluid rounded-circle">
             <h1 class="text-light"><a href="index.html">Cynthia Obonyo</a></h1>
               <div class="social-links mt-3 text-center">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="facebook"><i class="fab fa-facebook"></i></i></a>
+                <a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></i></a>
               </div>
             </div>
           </div>
@@ -65,8 +66,8 @@
             <ul>
               <li class="active"><a href="{% url 'home' %}"><i class="bx bx-home"></i> <span>Home</span></a></li>
               <li><a href="{% url 'about' %}"><i class="bx bx-user"></i> <span>About</span></a></li>
-              <li><a href="{% url 'portfolio' %}"><i class="bx bx-book-content"></i>My Projects</a></li>
-              <li><a href="{% url 'contact' %}"><i class="bx bx-envelope"></i> Contact Infomation</a></li>
+              <li><a href="{% url 'portfolio' %}"><i class="bx bx-book-content"></i>Projects</a></li>
+              <li><a href="{% url 'contact' %}"><i class="bx bx-envelope"></i>Contact</a></li>
 
             </ul>
           </nav><!-- .nav-menu -->

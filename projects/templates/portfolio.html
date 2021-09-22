@@ -12,7 +12,7 @@
       <h2>{{ portfolio.title }}</h2>
       <p>{{ portfolio.description}}</p>
       <!--Display portfolios portfolio images  -->
-      <img src="{{portfolio.project_image.url}}" class="img-responsive" alt="Image" onclick="window.open(this.src)">
+      <img width="300" height="auto" src="{{portfolio.project_image.url}}" class="img-responsive" alt="Image" onclick="window.open(this.src)">
       <div class="row live">
         <div class="col-md-3">
           <a href="{{portfolio.repo_link}}"><button class="btn link live-link">View on Github</button></a>

@@ -1,13 +1,32 @@
+from projects.serializer import MerchAuthor
 from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse, Http404
 import datetime as dt
-from .models import Project
+from .models import Author, Project
 from django.core.exceptions import ObjectDoesNotExist
 from .email import *
 from django.contrib import messages
 from .forms import *
 
-# Create your views here.
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializer import MerchSerializer,MerchAuthor
+
+#........
+class MerchList(APIView):
+    def get(self, request, format=None):
+        all_projects = Project.objects.all()
+        serializers = MerchSerializer(all_projects, many=True)
+        return Response(serializers.data)
+
+class MerchUser(APIView):
+    def get(self, request, format=None):
+        author = Author.objects.all()
+        serializers = MerchAuthor(author, many=True)
+        return Response(serializers.data)
+
+
+
 def home(request):
     return render(request,'index.html')
 

@@ -9,21 +9,21 @@
           <div class="col-md-9">
             <div class="section-title">
                 <p>Here is a list of my recent favorite projects.</p>
-            </div>
-            <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-              {% for projects_item in projects %}
-              <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                <div class="portfolio-wrap">
-                  <img src="{{projects_item.project_image.url}}" class="img-fluid" alt="">
-                  <div class="portfolio-links">
-                    <a href="{% url 'portfolio_details' projects_item.id %}" title="More Details">{{projects_item.title|truncatechars:15 }}</a>
+              </div>
+              <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
+                {% for projects_item in projects %}
+                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+                  <div class="portfolio-wrap">
+                    <img src="{{projects_item.project_image.url}}" class="img-fluid" alt="">
+                    <div class="portfolio-links">
+                      <a href="{% url 'portfolio_details' projects_item.id %}" title="More Details">{{projects_item.title|truncatechars:15 }}</a>
+                    </div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
-              {% endfor %}
             </div>
           </div>
         </div>
-      </div>
-    </section><!-- End Portfolio Section -->
-{% endblock %}
+      </section><!-- End Portfolio Section -->
+  {% endblock %}

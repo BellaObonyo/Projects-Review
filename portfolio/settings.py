@@ -16,12 +16,11 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# cloudinary.config(
-#     cloud_name ='badgerz',
-#     api_key=config('api_key'), 
-#     api_secret=config('api_secret'),
-#     secure = config('secure'),
-# )
+cloudinary.config(
+            cloud_name ='badgerz',
+            api_key=config('CLOUDINARY_API_KEY'), 
+            api_secret=config('CLOUDINARY_API_SECRET'),
+        )
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -48,6 +47,7 @@ INSTALLED_APPS = [
     'projects',
     'bootstrap4',
     'cloudinary',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
