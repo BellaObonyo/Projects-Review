@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container bg-light mt-5 pt-5" >
+    <div class="row mt-5">
+        <div class="col-6 ">
+          <div class="project-image">
+              <img src="{{project.image.url}}">
+          </div>
+          <div class="m-3 mx-5">
+           <div class="row">
+             <div class="col-xs-4"><h5>{{project.title}}</h5></div>
+             <div class="col-xs-4"><h6><a href="{{project.link}}">Live link</a></h6></div>
+           </div> 
+            <p>{{project.description}}</p>
+            <h6>By {{project.user.username}}</h6>
+
+            <h4 class="font-weight-bold mt-4">Developer's Contact</h4>
+            <h6>Email - {{project.user.email}}</h6>
+          </div>
+          
+        </div>
+        <div class="col-4 p-4 card">
+            <h5>Rate the project</h5>  
+            <h6 class="mt-5">Usability</h6> 
+            <div>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </div>   
+            <h6 class="mt-5">Content</h6> 
+            <div >
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star "></span>
+              <span class="fa fa-star"></span>
+              <span class="fa fa-star"></span>
+            </div> 
+            <h6 class="mt-5">Design</h6> 
+            <div>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star checked"></span>
+              <span class="fa fa-star"></span>
+            </div>     
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+
+{% endblock %}

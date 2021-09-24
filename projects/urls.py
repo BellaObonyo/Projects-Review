@@ -1,20 +1,20 @@
+# from account.serializer import MerchUser
+from django.contrib import admin
 from django.urls import path
-from .import views
+from .views import addproject, index, register, loggin, loggout, profile, show_project
+# , register,signIn, signOut
+# from .views import add_project,profile, profile_photo,project,rate_project,delete_project,MerchList, MerchUsers, LoginView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
-  path('', views.home, name='home'),
-  path('portfolio/', views.portfolio, name='portfolio'),
-  path('about/', views.about, name='about'),
-  path('contact/', views.contact, name='contact'),
-  path('search/',views.search_portfolio,name='search_portfolio'),
-  path('portfolio/details/<int:portfolio_id>',views.detail,  name='portfolio_details'),
-  path('api/projects/',views.MerchList.as_view()),
-  path('api/users/',views.MerchUser.as_view())
+    path('', index, name='index'),
+   
+      path('login', loggin, name='login'),
+      path('logout', loggout, name='logout'),
+      path('register', register, name='register'),
+      path('profile', profile, name='profile'),
+      path('show_project/<id>', show_project, name='individual_project'),
+      path('addproject', addproject, name='newproject'),
 
-]
-
-if settings.DEBUG:
-  urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

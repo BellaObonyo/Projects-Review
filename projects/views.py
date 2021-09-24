@@ -1,75 +1,123 @@
-from projects.serializer import MerchAuthor
-from django.shortcuts import get_object_or_404, render,redirect
-from django.http import HttpResponse, Http404
-import datetime as dt
-from .models import Author, Project
-from django.core.exceptions import ObjectDoesNotExist
-from .email import *
+from django.http.response import JsonResponse
+from django.shortcuts import render, redirect
+from .models import myProjects,Votes, Users
+from django.contrib.auth import authenticate,login,logout,login
+
 from django.contrib import messages
-from .forms import *
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.decorators import login_required
 
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from .serializer import MerchSerializer,MerchAuthor
+# Create your views here.
+def index(request):
+    myprojects=myProjects.objects.all()
+    context={"projects":myprojects}
+    return render(request,'index.html', context)
 
-#........
-class MerchList(APIView):
-    def get(self, request, format=None):
-        all_projects = Project.objects.all()
-        serializers = MerchSerializer(all_projects, many=True)
-        return Response(serializers.data)
+def register(request):
+    if request.method=="POST":
+            username=request.POST.get('username')
+            email=request.POST.get('email')
+            password=request.POST.get('password')
+            confirm_password=request.POST.get('confirm_password')
+            user_e=Users.objects.filter(username=username).count()
+            ema_ex=Users.objects.filter(email=email).count()
 
-class MerchUser(APIView):
-    def get(self, request, format=None):
-        author = Author.objects.all()
-        serializers = MerchAuthor(author, many=True)
-        return Response(serializers.data)
+            if user_e>0:
+                messages.add_message(request, messages.INFO, 'username taken.')
+                return redirect(register) 
 
+            elif ema_ex>0:
+                messages.add_message(request, messages.INFO, 'email registered.')
+                return redirect(register)       
+            else:
+                if password!=confirm_password:
+                    messages.add_message(request, messages.INFO, 'Passwords do not match.')
+                    return redirect(register) 
+                else:
+                    user = Users(username=username, email=email, password=make_password(password))
+                    user.save()
 
-
-def home(request):
-    return render(request,'index.html')
-
-def services(request):
-    return render(request,'services.html')
-
-def contact(request):
-    name = request.POST.get('name')
-    email = request.POST.get('email')
-    message = request.POST.get('message')
-    if request.method == 'POST':
-      contact_form = ContactForm(request.POST)
-      if contact_form.is_valid():
-        contact_form.save()
-        send_contact_email(name, email)
-        data = {'success': 'Thank you for contacting me, I will get back to you shortly'}
-        messages.info(request, f"Message submitted successfully")
+                    user = Users.objects.get(username=username)
+                    messages.add_message(request, messages.SUCCESS, 'saved')
+                    return redirect(loggin) 
+        
     else:
-      contact_form = ContactForm()
-    return render(request,'contact.html',{'contact_form':contact_form})
+        return render(request, "register.html")
 
-def about(requst):
-  return render(requst, 'about.html')
 
-def portfolio(request):
-  projects = Project.objects.all().order_by('-published_on')
-  return render(request, 'projects.html', {'projects':projects})
+def loggin(request):
+     if request.method=="POST":
+        email=request.POST.get('email')
+        password=request.POST.get('password')
+        user= authenticate(email=email, password=password)
 
-def detail(request,portfolio_id):
-  try:
-    portfolio = get_object_or_404(Project, pk = portfolio_id)
-  except ObjectDoesNotExist:
-    raise Http404()
-  return render(request, 'portfolio.html', {'portfolio':portfolio})
+        if user is not None:
+            login(request,user )
+            messages.add_message(request, messages.INFO, 'Successfully logged in!')
+            return redirect(index)
+ 
+        else:
+            messages.add_message(request, messages.INFO, 'Invalid credentials!')
+            return redirect(loggin)
 
-def search_portfolio(request):
-  if 'project' in request.GET and request.GET["project"]:
-    search_term = request.GET.get("project")
-    searched_projects = Project.search_project_title(search_term)
-    message = f"{search_term}"
+     else:
+        return render(request, "login.html")
 
-    return render(request,'search.html', {"message":message,"projects":searched_projects})
 
-  else:
-    message = "You haven't searched for any term"
-    return render(request,'search.html',{"message":message})
+def loggout(request):
+    logout(request)
+    messages.add_message(request, messages.SUCCESS, 'Logout successfully!')
+    return redirect(index)
+
+
+
+# new project
+def addproject(request):
+    if request.method=="POST":
+            image=request.FILES['landingimage']
+            title = request.POST.get('title')
+            
+            description=request.POST.get('description')
+            link=request.POST.get('link')
+
+            project = myProjects(title=title, image=image, description=description, link=link, user=request.user)
+            project.save()
+            messages.add_message(request, messages.SUCCESS, 'saved')
+            return redirect(index) 
+        
+    else:
+        return render(request, "addproject.html")
+# individual project
+
+def show_project(request, id):
+    project = myProjects.objects.get(id=id)
+    if request.method=="POST":
+            image=request.FILES['landingimage']
+            title = request.POST.get('title')
+            
+            description=request.POST.get('description')
+            link=request.POST.get('link')
+
+            project = myProjects(title=title, image=image, description=description, link=link, user=request.user)
+            project.save()
+            messages.add_message(request, messages.SUCCESS, 'saved')
+            return redirect(index) 
+        
+    else:
+        return render(request, "show_project.html",{"project":project})
+
+# profile
+def profile(request):
+    if request.method=="POST":
+            profile=request.FILES['profile_pic']
+            bio = request.POST['bio']
+                       
+            user = Users.objects.get(id=request.user.id)
+            user.bio=bio, 
+            user.profile=profile
+            user.save()
+            messages.add_message(request, messages.SUCCESS, 'saved')
+            return render(request, "profile.html")
+        
+    else:
+        return render(request, "profile.html")

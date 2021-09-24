@@ -1,46 +1,77 @@
 from django.db import models
-import datetime as dt
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from cloudinary.models import CloudinaryField
-
+import datetime as dt
 
 # Create your models here.
-class Author(models.Model):
-  first_name = models.CharField(max_length=30)
-  sur_name = models.CharField(max_length=30)
-  email = models.EmailField()
-  phone_number = models.CharField(max_length=10,blank=True)
-
-  def __str__(self):
-      return self.first_name
-
-  class meta:
-    ordering =['name']
-
-  def save_author(self):
-    self.save()
-
-class Project(models.Model):
-  title = models.CharField(max_length=60)
-  description  = models.TextField()
-  author = models.ForeignKey(Author,on_delete=models.CASCADE)
-  published_on = models.DateTimeField(auto_now_add=True)
-  project_image = CloudinaryField('image')
-  repo_link = models.CharField(max_length=100)
-  live_link = models.CharField(max_length=100)
-
-
-  def __str__(self):
-      return self.title
-
-  @classmethod
-  def search_project_title(cls,search_term):
-    search_projects = cls.objects.filter(title__icontains=search_term)
-    return search_projects
-
-class Contact(models.Model):
-    name = models.CharField(max_length = 30)
-    email = models.EmailField()
-    message = models.TextField()
+class MyAccountManager(BaseUserManager):
+    def create_user(self, email, username, password=None):
+        if not email:
+            raise ValueError(" User must have an email address")
+        if not username:
+            raise ValueError(" User must have an username!")    
+        
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username,
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
     
-    def __str__(self):
-        return self.name
+    def create_superuser(self, email, username, password):
+        user = self.create_user(
+            email=self.normalize_email(email),
+            password = password,
+            username=username,
+        )
+        user.email = email
+        user.is_admin = True 
+        user.is_staff = True 
+        user.is_superuser = True 
+        user.save(using=self._db)
+        return user
+        
+
+class Users(AbstractBaseUser):
+    username = models.CharField( max_length=50, unique=True)  
+    email = models.CharField( max_length=50, unique=True) 
+    profile = CloudinaryField('image', default='badgerz/image/upload/v1632511355/jellu_bmu8g6.jpg') 
+    bio= models.TextField(null=True)
+    last_login = models.DateTimeField(default=dt.datetime.now)
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    password_reset = models.CharField( max_length=50, default="e5viu3snjorndvd")    
+    password = models.CharField( max_length=100)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = [ 'username']        
+    objects=MyAccountManager()
+     
+    def _str_(self):
+        return self.email
+    
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
+        return True
+    def save_project(self):
+        self.save()
+    
+class myProjects(models.Model):
+    title = models.CharField(max_length =100)
+    image = CloudinaryField('image') 
+    description = models.TextField()
+    link = models.CharField(max_length =100)
+    user=models.ForeignKey("Users",on_delete=models.CASCADE)
+
+class Votes(models.Model):
+    design=models.FloatField(default=0)
+    usability=models.FloatField(default=0)
+    content=models.FloatField(default=0)
+    project=models.ForeignKey("myProjects",on_delete=models.CASCADE)
+    user=models.ForeignKey("Users",on_delete=models.CASCADE)
+

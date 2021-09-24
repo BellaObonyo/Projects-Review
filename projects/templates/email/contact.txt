@@ -1,6 +1,0 @@
-Hello {{name}}
-
-Thank you for reaching out, I will respond to you in a few...
-
-Regards,
-Obonyo Cynthia

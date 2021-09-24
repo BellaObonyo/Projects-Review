@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container bg-light mt-5 pt-5" >
+  <div class="row mt-5 text-center" style="overflow: hidden;">
+    <div class="profile-img">
+          <img src="{{user.profile.url}}" width="20" height="auto">
+    </div>
+    <h5 class="m-2">{{user.username}}</h5>
+    <h6>{{user.bio}}</h6>
+  </div>
+    <div class="row mt-5">
+        <div class="col-3"></div>
+        <div class="col-6 p-4">
+            <h3>UPDATE PROFILE</h3>
+            {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+            <form action="/profile" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" readonly value="{{user.email}}"" name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text" readonly value="{{user.username}}" name="username" class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Bio</label>
+                    <input type="text" value="{{user.bio}}" name="bio" class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Profile <Picture></Picture></label>
+                    <input type="file" name="profile_pic" class="form-control">
+                </div>   
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+{% endblock %}

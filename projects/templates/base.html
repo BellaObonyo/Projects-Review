@@ -1,107 +1,210 @@
-{% load bootstrap4 %}
 {% load static %}
-{% load cloudinary %}
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Reviewer</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,600;1,600&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold" href="/">Reviewer</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="bi-list"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0"> 
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="/">Home</a></li>
 
-
-  {% if title %}
-  <title>{{title}}</title>
-  {% else %}
-  <title>Bella Projects Portfolio </title>
-  {% endif %}
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link rel="icon" href="https://g">
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-
-  <!-- Vendor CSS Files -->
-  <link href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/icofont/icofont.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/venobox/venobox.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
-  <link href="{% static 'assets/aos/aos.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="https://res.cloudinary.com/dbos9xidr/raw/upload/v1628668395/portfolio-style.css">
-
-  {% block styles %}
-  {% bootstrap_css %}
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  {% endblock styles %}
-</head>
-
-<body>
-
-  <div class="container-fluid">
-      <!-- ======= Mobile nav toggle button ======= -->
-      <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
-
-      <!-- ======= Header ======= -->
-      <header id="header">
-        <div class="d-flex flex-column">
-
-          <div class="profile">
-            <img src="{% static 'images/Bella.jpg' %}" alt="" class="img-fluid rounded-circle">
-            <h1 class="text-light"><a href="index.html">Cynthia Obonyo</a></h1>
-              <div class="social-links mt-3 text-center">
-                <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="facebook"><i class="fab fa-facebook"></i></i></a>
-                <a href="#" class="linkedin"><i class="fab fa-linkedin-in"></i></i></a>
-              </div>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="/addproject">Submit project</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="/profile">Profile</a></li>
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="/logout">Logout</a></li>
+                    {% else %}
+                   
+                        <li class="nav-item"><a class="nav-link me-lg-3" href="/register">Register</a></li>
+                    </ul>
+                    <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
+                        <span class="d-flex align-items-center">
+                            <i class="bi-chat-text-fill me-2"></i>
+                            <span class="small"><a class="text-white me-lg-3" href="/login">LOGIN</a></span>
+                        </span>
+                    </button>
+                 
+                    {% endif %}
+                </div>
             </div>
-          </div>
-
-          <nav class="nav-menu">
-            <ul>
-              <li class="active"><a href="{% url 'home' %}"><i class="bx bx-home"></i> <span>Home</span></a></li>
-              <li><a href="{% url 'about' %}"><i class="bx bx-user"></i> <span>About</span></a></li>
-              <li><a href="{% url 'portfolio' %}"><i class="bx bx-book-content"></i>Projects</a></li>
-              <li><a href="{% url 'contact' %}"><i class="bx bx-envelope"></i>Contact</a></li>
-
-            </ul>
-          </nav><!-- .nav-menu -->
-          <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
-        </div>
-      </header><!-- End Header -->
+        </nav>
+        <!-- Mashead header-->
         {% block content %}
-        {% endblock content %}
-            <!-- ======= Footer ======= -->
-            <footer id="footer">
-              <div class="container">
-              </div>
-            </footer><!-- End  Footer -->
-  </div>
-  {% block scripts %}
+        {% endblock %}
+               <!-- App features section-->
+        <section id="features">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-8 order-lg-1 mb-5 mb-lg-0">
+                        <div class="container-fluid px-5">
+                            <div class="row gx-5">
+                                <div class="col-md-6 mb-5">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-phone icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Create Projects</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-camera icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Take Screenshots</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-5 mb-md-0">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-gift icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Upload</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- Feature item-->
+                                    <div class="text-center">
+                                        <i class="bi-patch-check icon-feature text-gradient d-block mb-3"></i>
+                                        <h3 class="font-alt">Get reviews</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 order-lg-0">
+                        <!-- Features section device mockup-->
+                        <div class="features-device-mockup">
+                            <svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="circleGradient" gradientTransform="rotate(45)">
+                                        <stop class="gradient-start-color" offset="0%"></stop>
+                                        <stop class="gradient-end-color" offset="100%"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="50"></circle></svg
+                            ><svg class="shape-1 d-none d-sm-block" viewBox="0 0 240.83 240.83" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(120.42 -49.88) rotate(45)"></rect>
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(-49.88 120.42) rotate(-45)"></rect></svg
+                            ><svg class="shape-2 d-none d-sm-block" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                            <div class="device-wrapper">
+                                <div class="device" data-device="iPhoneX" data-orientation="portrait" data-color="black">
+                                    <div class="screen bg-black">
+                                        <!-- PUT CONTENTS HERE:-->
+                                        <!-- * * This can be a video, image, or just about anything else.-->
+                                        <!-- * * Set the max width of your media to 100% and the height to-->
+                                        <!-- * * 100% like the demo example below.-->
+                                        <video muted="muted" autoplay="" loop="" style="max-width: 100%; height: 100%"><source src="assets/img/demo-screen.mp4" type="video/mp4" /></video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+      
 
-  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+       
+        <!-- Footer-->
+        <footer class="bg-black text-center py-5">
+            <div class="container px-5">
+                <div class="text-white-50 small">
+                    <div class="mb-2">All Rights Reserved.</div>
+                    <a href="#!">Privacy</a>
+                    <span class="mx-1">&middot;</span>
+                    <a href="#!">Terms</a>
+                    <span class="mx-1">&middot;</span>
+                    <a href="#!">FAQ</a>
+                </div>
+            </div>
+        </footer>
+        <!-- Feedback Modal-->
+        <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient-primary-to-secondary p-4">
+                        <h5 class="modal-title font-alt text-white" id="feedbackModalLabel">Send feedback</h5>
+                        <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body border-0 p-4">
+                     
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <label for="name">Full name</label>
+                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                            </div>
+                            <!-- Email address input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                <label for="email">Email address</label>
+                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                            </div>
+                            <!-- Phone number input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                <label for="phone">Phone number</label>
+                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                            </div>
+                            <!-- Message input-->
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                                <label for="message">Message</label>
+                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                            </div>
+                            
+                            <div class="d-none" id="submitSuccessMessage">
+                                <div class="text-center mb-3">
+                                    <div class="fw-bolder">Form submission successful!</div>
+                                   
+                                    <br />
+                                    <a href="https://startbootstrap.com/solution/contact-forms">###</a>
+                                </div>
+                            </div>
+                            <!-- Submit error message-->
+                            <!---->
+                            <!-- This is what your users will see when there is-->
+                            <!-- an error submitting the form-->
+                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                            <!-- Submit Button-->
+                            <div class="d-grid"><button class="btn btn-primary rounded-pill btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js'%}"></script>
 
-  <!-- Vendor JS Files -->
-  <script src="{% static 'assets/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'assets/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'assets/jquery.easing/jquery.easing.min.js' %}"></script>
-  <script src="{% static 'assets/php-email-form/validate.js' %}"></script>
-  <script src="{% static 'assets/waypoints/jquery.waypoints.min.js' %}"></script>
-  <script src="{% static 'assets/counterup/counterup.min.js' %}"></script>
-  <script src="{% static 'assets/isotope-layout/isotope.pkgd.min.js' %}"></script>
-  <script src="{% static 'assets/venobox/venobox.min.js' %}"></script>
-  <script src="{% static 'assets/owl.carousel/owl.carousel.min.js' %}"></script>
-  <script src="{% static 'assets/typed.js' %}/typed.min.js' %}"></script>
-  <script src="{% static 'assets/aos/aos.js' %}"></script>
-
-  <!-- Template Main JS File -->
-  <script src="{% static 'js/main.js' %}"></script>
-  {% endblock scripts %}
-</body>
-
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
 </html>
