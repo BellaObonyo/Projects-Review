@@ -1,4 +1,4 @@
-# Quotes
+# Projects
 #### This application  allows a user to post a project he/she has created and get it reviewed.
 #### **By Cynthia Obonyo**
 ## Project Description
@@ -23,7 +23,7 @@ The application has no backend. Just frontend.
      
 
 ## Live link
-Deployed project can be accessed here [Portfolio-projects]()
+Deployed project can be accessed here [Projects](https://projects-uploads.herokuapp.com/)
 
 ## Known Bugs
     The application works perfectly well, no bugs.
@@ -41,5 +41,5 @@ Deployed project can be accessed here [Portfolio-projects]()
     - phone :: +254792625077
 
 ### License
-*Licenced under the [MT-licence](https:)*
+*Licenced under the [MT-licence]*
 Copyright (c) 2021 **Obonyo Cynthia
