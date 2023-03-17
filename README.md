@@ -38,7 +38,7 @@ Deployed project can be accessed here [Projects](https://projects-uploads.heroku
 
 ## Support and contact details
     - email :: cynthiabella.obonyo@gmail.com
-    - phone :: +254792625077
+   
 
 ### License
 *Licenced under the [MT-licence]*
